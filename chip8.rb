@@ -11,6 +11,7 @@ set title: TITLE
 set fps_cap: FPS_NUMBER
 
 screen = Screen.new
+memory = Memory.new
 
 update do
   clear
