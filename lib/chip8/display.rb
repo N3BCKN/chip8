@@ -8,13 +8,13 @@ class Screen
   end
 
   def draw_buffer
-    (0..BASE_WIDTH).each do |x|
+    for y in 0..BASE_HEIGHT do
       @buffer << []
 
-      (0..BASE_HEIGHT).each do |y|
+      for x in 0..BASE_WIDTH do
         signal = rand > 0.5 ? 0 : 1
-        @buffer[x] << signal
-        draw_pixel(x, y, signal)
+        @buffer[y] << signal
+        draw_pixel(x, y, signal) # if signal == 1
       end
     end
   end
