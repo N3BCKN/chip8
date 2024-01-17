@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ruby2d'
 
 require_relative './lib/chip8'
@@ -12,7 +14,7 @@ screen = Screen.new
 
 update do
   clear
-  
+
   screen.draw_buffer
   screen.reset_buffer
 end

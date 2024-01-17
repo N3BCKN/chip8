@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 
-#main
+# main
 TITLE = 'chip8 emulator'
 FPS_NUMBER = 30
 
-#display
+# display
 BASE_WIDTH  = 64
 BASE_HEIGHT = 32
 SCREEN_MULTIPLIER = 10
