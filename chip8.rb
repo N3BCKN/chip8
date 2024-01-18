@@ -15,6 +15,8 @@ memory   = Memory.new
 register = Register.new
 keyboard = Keyboard.new
 
+memory.load_sprites(SPRITES)
+
 on :key_down do |event|
   keyboard.key_down(event.key.to_sym) if ACCEPTED_KEYS.include? event.key
 end

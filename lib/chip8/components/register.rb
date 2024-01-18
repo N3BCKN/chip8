@@ -2,13 +2,13 @@
 
 class Register
   def initialize
-    @v = Array.new(NUMBER_OF_REGISTERS,0)
+    @v = Array.new(NUMBER_OF_REGISTERS, 0)
     @i = 0
     @delay_timer = 0
     @sound_timer = 0
     @stack_pointer = -1
-    @program_counter = LOAD_PROGRAM_ADRRESS
-    @stack = Array.new(STACK_DEPTH,0)
+    @program_counter = LOAD_PROGRAM_ADDRESS
+    @stack = Array.new(STACK_DEPTH, 0)
   end
 
   def reset
@@ -18,12 +18,12 @@ class Register
     @delay_timer = 0
     @sound_timer = 0
     @stack_pointer = -1
-    @program_counter = LOAD_PROGRAM_ADRRESS
-  end 
+    @program_counter = LOAD_PROGRAM_ADDRESS
+  end
 
   def push_stack(value)
     @stack_pointer += 1
-    raise StandardError if stack_overflow? # todo: write custom error class to handle it
+    raise StandardError if stack_overflow? # TODO: write custom error class to handle it
 
     @stack[@stack_pointer] = value
   end
@@ -31,7 +31,7 @@ class Register
   def pop_stack
     value = @stack[@stack_pointer]
     @stack_pointer -= 1
-    raise StandardError if stack_underflow? # todo: write custom error class to handle it
+    raise StandardError if stack_underflow? # TODO: write custom error class to handle it
 
     value
   end
