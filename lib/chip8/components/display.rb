@@ -14,7 +14,7 @@ class Screen
       for x in 0..BASE_WIDTH do
         signal = rand > 0.5 ? 0 : 1
         @buffer[y] << signal
-        draw_pixel(x, y, signal) # if signal == 1
+        draw_pixel(x, y, signal)  if signal == 1
       end
     end
   end
@@ -26,12 +26,12 @@ class Screen
   private
 
   def draw_pixel(x, y, signal)
-    color = signal == 1 ? COLOR : BG_COLOR
+    # color = signal == 1 ? COLOR : BG_COLOR
     Square.new(
       x: x * SCREEN_MULTIPLIER,
       y: y * SCREEN_MULTIPLIER,
       size: SCREEN_MULTIPLIER,
-      color: color
+      color: COLOR
     )
   end
 end
