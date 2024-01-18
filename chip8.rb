@@ -13,6 +13,15 @@ set fps_cap: FPS_NUMBER
 screen   = Screen.new
 memory   = Memory.new
 register = Register.new
+keyboard = Keyboard.new
+
+on :key_down do |event|
+  keyboard.key_down(event.key.to_sym) if ACCEPTED_KEYS.include? event.key
+end
+
+on :key_up do |event|
+  keyboard.key_down(event.key.to_sym) if ACCEPTED_KEYS.include? event.key
+end
 
 update do
   clear
