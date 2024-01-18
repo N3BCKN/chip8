@@ -2,7 +2,7 @@
 
 class Memory
   def initialize
-    @memory = Array.new(MEMORY_SIZE).fill(0)
+    @memory = Array.new(MEMORY_SIZE, 0)
   end
 
   def reset
