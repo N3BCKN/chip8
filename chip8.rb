@@ -16,11 +16,6 @@ keyboard = Chip8::Keyboard.new
 screen   = Chip8::Screen.new(memory)
 
 memory.load_sprites
-screen.draw_buffer
-screen.draw_sprite(1, 10,  0, 5)
-screen.draw_sprite(6, 10,  5, 5)
-screen.draw_sprite(11, 10, 10, 5)
-screen.draw_sprite(16, 10, 15, 5)
 
 on :key_down do |event|
   keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
@@ -30,11 +25,14 @@ on :key_up do |event|
   keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
 
-# update do
-#   clear
+update do
+  clear
 
-#   screen.draw_buffer
-#   screen.reset_buffer
-# end
+  screen.draw_buffer
+  screen.draw_sprite(10, 1,  0, 5)
+  screen.draw_sprite(10, 6,  5, 5)
+  screen.draw_sprite(10, 11, 10, 5)
+  screen.draw_sprite(10, 16, 15, 5)
+end
 
 show

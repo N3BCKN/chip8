@@ -1,21 +1,20 @@
 # frozen_string_literal: true
 
+require 'byebug'
+
 module Chip8
   class Screen
     attr_reader :buffer
 
     def initialize(memory)
       @memory = memory
-      @buffer = []
+      @buffer = Array.new(BASE_HEIGHT) { Array.new(BASE_WIDTH).fill(0) }
     end
 
     def draw_buffer
-      for y in 0..BASE_HEIGHT do
-        @buffer << []
-
-        for x in 0..BASE_WIDTH do
-          @buffer[y] << 0
-          draw_pixel(x, y, 0)
+      @buffer.each_with_index do |_val, y|
+        @buffer[y].each_with_index do |signal, x|
+          draw_pixel(y, x, signal)
         end
       end
     end
@@ -30,14 +29,14 @@ module Chip8
         for lx in 0...8 do
           bit_to_check = 0b10000000 >> lx
           signal       = line & bit_to_check
-          draw_pixel(h + lx, w + ly, signal)
+          @buffer[h + ly][w + lx] = signal
         end
       end
     end
 
     private
 
-    def draw_pixel(x, y, signal)
+    def draw_pixel(y, x, signal)
       return if signal.zero?
 
       Square.new(
