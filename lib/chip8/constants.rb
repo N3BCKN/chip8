@@ -20,6 +20,7 @@ module Chip8
   # register
   NUMBER_OF_REGISTERS = 16
   STACK_DEPTH = 16
+  TIMER_60_HZ = 1 / 60
 
   # keyboard
   NUMBER_OF_KEYS = 16

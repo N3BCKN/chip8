@@ -28,6 +28,11 @@ end
 update do
   clear
 
+  if register.delay_timer > 0
+    sleep TIMER_60_HZ
+    register.delay_timer -= 1
+  end
+
   screen.draw_buffer
   screen.draw_sprite(10, 1,  0, 5)
   screen.draw_sprite(10, 6,  5, 5)

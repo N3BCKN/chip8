@@ -2,6 +2,8 @@
 
 module Chip8
   class Register
+    attr_accessor :delay_timer
+
     def initialize
       @v = Array.new(NUMBER_OF_REGISTERS, 0)
       @i = 0
