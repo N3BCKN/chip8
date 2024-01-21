@@ -14,6 +14,9 @@ memory   = Chip8::Memory.new
 register = Chip8::Register.new
 keyboard = Chip8::Keyboard.new
 screen   = Chip8::Screen.new(memory)
+sound    = Chip8::SoundCard.new
+
+sound.play
 
 memory.load_sprites
 
