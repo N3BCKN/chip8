@@ -52,3 +52,14 @@ module Chip8
     0xF0, 0x80, 0xF0, 0x80, 0x80  # F
   ].freeze
 end
+
+
+INSTRUCTIONS = [
+  {
+    key: 1,
+    id: 'CLS',
+    name: 'CLS',
+    mask: 0xfff,
+    pattern: 0x00e0
+  },
+].freeze

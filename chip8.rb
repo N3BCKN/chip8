@@ -16,8 +16,6 @@ keyboard = Chip8::Keyboard.new
 screen   = Chip8::Screen.new(memory)
 sound    = Chip8::SoundCard.new
 
-sound.play
-
 memory.load_sprites
 
 on :key_down do |event|
@@ -32,9 +30,19 @@ update do
   clear
 
   if register.delay_timer > 0
-    sleep TIMER_60_HZ
+    sleep Chip8::TIMER_60_HZ
     register.delay_timer -= 1
   end
+
+  if register.sound_timer > 0
+    sound.play
+    sleep Chip8::TIMER_60_HZ
+    register.sound_timer -= 1
+  end
+
+  sound.stop if register.sound_timer == 0
+
+
 
   screen.draw_buffer
   screen.draw_sprite(10, 1,  0, 5)
