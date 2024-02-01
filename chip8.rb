@@ -18,6 +18,16 @@ sound    = Chip8::SoundCard.new
 
 memory.load_sprites
 
+Chip8::Disassambler.disassamble(0xf107)
+Chip8::Disassambler.disassamble(0xf10a)
+Chip8::Disassambler.disassamble(0xf115)
+Chip8::Disassambler.disassamble(0xf118)
+Chip8::Disassambler.disassamble(0xf11e)
+Chip8::Disassambler.disassamble(0xf129)
+Chip8::Disassambler.disassamble(0xf133)
+Chip8::Disassambler.disassamble(0xf155)
+Chip8::Disassambler.disassamble(0xf165)
+
 on :key_down do |event|
   keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
@@ -41,8 +51,6 @@ update do
   end
 
   sound.stop if register.sound_timer == 0
-
-
 
   screen.draw_buffer
   screen.draw_sprite(10, 1,  0, 5)
