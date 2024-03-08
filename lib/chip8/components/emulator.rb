@@ -16,6 +16,8 @@ module Chip8
       load_sprites_to_memory(SPRITES)
       rom = open_rom
       load_rom_to_memory(rom)
+
+      p @memory
     end
 
     private
