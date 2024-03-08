@@ -21,8 +21,6 @@ rom = (File.open('./roms/test_opcode.ch8', 'rb') { |f| f.read }).unpack('C*')
 memory.load_sprites(Chip8::SPRITES)
 
 memory.load_rom(rom)
-#change after rom load
-# register.program_counter = LOAD_PROGRAM_ADDRESS
 
 on :key_down do |event|
   keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
