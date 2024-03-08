@@ -10,47 +10,38 @@ set color:   Chip8::BG_COLOR
 set title:   Chip8::TITLE
 set fps_cap: Chip8::FPS_NUMBER
 
-memory   = Chip8::Memory.new
-register = Chip8::Register.new
-keyboard = Chip8::Keyboard.new
-screen   = Chip8::Screen.new(memory)
-sound    = Chip8::SoundCard.new
-
-rom = (File.open('./roms/test_opcode.ch8', 'rb') { |f| f.read }).unpack('C*')
-
-memory.load_sprites(Chip8::SPRITES)
-
-memory.load_rom(rom)
+chip8 = Chip8::Emulator.new
+chip8.run
 
 on :key_down do |event|
-  keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
+  chip8.keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
 
 on :key_up do |event|
-  keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
+  chip8.keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
 
 update do
   clear
 
-  if register.delay_timer > 0
+  if chip8.register.delay_timer > 0
     sleep Chip8::TIMER_60_HZ
-    register.delay_timer -= 1
+    chip8.register.delay_timer -= 1
   end
 
-  if register.sound_timer > 0
-    sound.play
+  if chip8.register.sound_timer > 0
+    chip8.sound.play
     sleep Chip8::TIMER_60_HZ
-    register.sound_timer -= 1
+    chip8.register.sound_timer -= 1
   end
 
-  sound.stop if register.sound_timer == 0
+  chip8.sound.stop if chip8.register.sound_timer == 0
 
-  screen.draw_buffer
-  screen.draw_sprite(10, 1,  0, 5)
-  screen.draw_sprite(10, 6,  5, 5)
-  screen.draw_sprite(10, 11, 10, 5)
-  screen.draw_sprite(10, 16, 15, 5)
+  chip8.screen.draw_buffer
+  chip8.screen.draw_sprite(10, 1,  0, 5)
+  chip8.screen.draw_sprite(10, 6,  5, 5)
+  chip8.screen.draw_sprite(10, 11, 10, 5)
+  chip8.screen.draw_sprite(10, 16, 15, 5)
 end
 
 show
