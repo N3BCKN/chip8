@@ -10,17 +10,21 @@ module Chip8
       @keyboard = Keyboard.new
       @screen   = Screen.new(@memory)
       @sound    = SoundCard.new
+      @disassambler = Disassambler.new
     end
 
     def run
       load_sprites_to_memory(SPRITES)
       rom = open_rom
       load_rom_to_memory(rom)
-
-      p @memory
+      p execute_opcode(0x3f09)
     end
 
     private
+
+    def execute_opcode(opcode)
+       @disassambler.disassamble(opcode)
+    end
 
     def open_rom
       path = ARGV[0] || './roms/test_opcode.ch8' #  TODO: custom error class here
