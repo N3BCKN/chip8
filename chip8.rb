@@ -16,17 +16,13 @@ keyboard = Chip8::Keyboard.new
 screen   = Chip8::Screen.new(memory)
 sound    = Chip8::SoundCard.new
 
-memory.load_sprites
+rom = (File.open('./roms/test_opcode.ch8', 'rb') { |f| f.read }).unpack('C*')
 
-Chip8::Disassambler.disassamble(0xf107)
-Chip8::Disassambler.disassamble(0xf10a)
-Chip8::Disassambler.disassamble(0xf115)
-Chip8::Disassambler.disassamble(0xf118)
-Chip8::Disassambler.disassamble(0xf11e)
-Chip8::Disassambler.disassamble(0xf129)
-Chip8::Disassambler.disassamble(0xf133)
-Chip8::Disassambler.disassamble(0xf155)
-Chip8::Disassambler.disassamble(0xf165)
+memory.load_sprites(Chip8::SPRITES)
+
+memory.load_rom(rom)
+#change after rom load
+# register.program_counter = LOAD_PROGRAM_ADDRESS
 
 on :key_down do |event|
   keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key

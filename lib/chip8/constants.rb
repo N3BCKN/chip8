@@ -94,7 +94,7 @@ module Chip8
     },
     {
       key: 6,
-      id: 'SE_VX_NN',
+      id: 'SE_VX_KK',
       name: 'SE',
       mask: 0xf000,
       pattern: 0x3000,
@@ -262,7 +262,7 @@ module Chip8
     },
     {
       key: 27,
-      id: 'LD_XV_DT',
+      id: 'LD_VX_DT',
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf007,
@@ -270,7 +270,7 @@ module Chip8
     },
     {
       key: 28,
-      id: 'LD_XV_K',
+      id: 'LD_VX_K',
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf00a,
