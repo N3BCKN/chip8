@@ -17,14 +17,10 @@ module Chip8
       load_sprites_to_memory(SPRITES)
       rom = open_rom
       load_rom_to_memory(rom)
-      p execute_opcode(0x3f09)
+      execute_opcode(0x3f09)
     end
 
     private
-
-    def execute_opcode(opcode)
-       @disassambler.disassamble(opcode)
-    end
 
     def open_rom
       path = ARGV[0] || './roms/test_opcode.ch8' #  TODO: custom error class here
@@ -41,5 +37,9 @@ module Chip8
 
       rom.each_with_index { |v, i| @memory[LOAD_PROGRAM_ADDRESS + i] = v }
     end
+
+    def execute(opcode)
+      @disassambler.disassamble(opcode)
+   end
   end
 end

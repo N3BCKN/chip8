@@ -21,6 +21,12 @@ on :key_up do |event|
   chip8.keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
 
+
+chip8.screen.draw_sprite(10, 1,  0, 5)
+chip8.screen.draw_sprite(10, 6,  5, 5)
+chip8.screen.draw_sprite(10, 11, 10, 5)
+chip8.screen.draw_sprite(10, 16, 15, 5)
+
 update do
   clear
 
@@ -38,10 +44,6 @@ update do
   chip8.sound.stop if chip8.register.sound_timer == 0
 
   chip8.screen.draw_buffer
-  chip8.screen.draw_sprite(10, 1,  0, 5)
-  chip8.screen.draw_sprite(10, 6,  5, 5)
-  chip8.screen.draw_sprite(10, 11, 10, 5)
-  chip8.screen.draw_sprite(10, 16, 15, 5)
 end
 
 show

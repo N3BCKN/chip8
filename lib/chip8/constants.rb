@@ -53,11 +53,11 @@ module Chip8
   ].freeze
 
   # CPU instructions
-  MASK_NNN = { mask: 0x0fff }
-  MASK_N   = { mask: 0x000f  }
-  MASK_VX  = { mask: 0x0f00, shift: 8 }
-  MASK_VY  = { mask: 0x00f0, shift: 4 }
-  MASK_KK  = { mask: 0x00ff }
+  MASK_NNN = { mask: 0x0fff }.freeze
+  MASK_N   = { mask: 0x000f }.freeze
+  MASK_VX  = { mask: 0x0f00, shift: 8 }.freeze
+  MASK_VY  = { mask: 0x00f0, shift: 4 }.freeze
+  MASK_KK  = { mask: 0x00ff }.freeze
 
   INSTRUCTIONS = [
     {

@@ -10,9 +10,9 @@ module Chip8
         else
           arg[:mask] & opcode
         end
-      end 
+      end
 
-      {instruction: instruction, arguments: arguments}
+      { instruction: instruction, arguments: arguments }
     end
   end
 end
