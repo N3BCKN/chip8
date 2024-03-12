@@ -17,7 +17,6 @@ module Chip8
       load_sprites_to_memory(SPRITES)
       rom = open_rom
       load_rom_to_memory(rom)
-      execute_opcode(0x3f09)
     end
 
     private
@@ -39,7 +38,12 @@ module Chip8
     end
 
     def execute(opcode)
-      @disassambler.disassamble(opcode)
-   end
+      disassambled = @disassambler.disassamble(opcode)
+
+      case disassambled[:instruction][:id]
+      when 'CLS'
+        @screen.reset_buffer
+      end
+    end
   end
 end

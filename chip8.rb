@@ -8,7 +8,7 @@ set width:   Chip8::BASE_WIDTH  * Chip8::SCREEN_MULTIPLIER
 set height:  Chip8::BASE_HEIGHT * Chip8::SCREEN_MULTIPLIER
 set color:   Chip8::BG_COLOR
 set title:   Chip8::TITLE
-set fps_cap: Chip8::FPS_NUMBER
+set fps_cap: 1
 
 chip8 = Chip8::Emulator.new
 chip8.run
@@ -20,7 +20,6 @@ end
 on :key_up do |event|
   chip8.keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
-
 
 chip8.screen.draw_sprite(10, 1,  0, 5)
 chip8.screen.draw_sprite(10, 6,  5, 5)
