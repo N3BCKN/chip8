@@ -2,7 +2,7 @@
 
 module Chip8
   class Register
-    attr_accessor :delay_timer, :sound_timer
+    attr_accessor :delay_timer, :sound_timer, :stack_pointer
 
     def initialize
       @v = Array.new(NUMBER_OF_REGISTERS, 0)

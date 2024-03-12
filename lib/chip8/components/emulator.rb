@@ -17,6 +17,9 @@ module Chip8
       load_sprites_to_memory(SPRITES)
       rom = open_rom
       load_rom_to_memory(rom)
+      @register.push_stack(2)
+      execute(0x00ee)
+      p @register.stack_pointer
     end
 
     private
@@ -39,10 +42,12 @@ module Chip8
 
     def execute(opcode)
       disassambled = @disassambler.disassamble(opcode)
-
+      p disassambled[:instruction][:id]
       case disassambled[:instruction][:id]
       when 'CLS'
         @screen.reset_buffer
+      when 'RET'
+        @register.stack_pointer = @register.pop_stack
       end
     end
   end
