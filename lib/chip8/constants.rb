@@ -8,6 +8,7 @@ module Chip8
   # display
   BASE_WIDTH  = 64
   BASE_HEIGHT = 32
+  SPRITE_HIGHT = 5
   SCREEN_MULTIPLIER = 10
   BG_COLOR = '#000000'
   COLOR = '#33ff66'
@@ -30,7 +31,6 @@ module Chip8
     a s d f
     z x c v
   ].freeze
-  KEYBOARD_MAPPER = {}.freeze
 
   # sprites
   SPRITES = [
@@ -230,7 +230,7 @@ module Chip8
     },
     {
       key: 23,
-      id: 'RND_VX',
+      id: 'RND_VX_KK',
       name: 'RND',
       mask: 0xf000,
       pattern: 0xc000,

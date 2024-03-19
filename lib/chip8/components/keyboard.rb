@@ -2,6 +2,8 @@
 
 module Chip8
   class Keyboard
+    attr_reader :keys
+
     def initialize
       @keys = {
         '1': false, '2': false, '3': false, '4': false,
@@ -19,12 +21,12 @@ module Chip8
       @keys[key] = false
     end
 
-    def key_down?(key)
-      @keys[key]
+    def key_down?(key_code)
+      @keys.values[key_code]
     end
 
     def any_key_down?
-      @keys.value?(true)
+      @keys.value?(true) ? @keys.values.find_index(true) : false
     end
   end
 end
