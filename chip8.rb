@@ -29,6 +29,8 @@ end
 update do
   clear
 
+  chip8.run
+
   if chip8.register.delay_timer > 0
     sleep Chip8::TIMER_60_HZ
     chip8.register.delay_timer -= 1

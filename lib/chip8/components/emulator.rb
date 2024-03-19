@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'byebug'
+
 module Chip8
   class Emulator
     attr_accessor :keyboard, :screen, :register, :sound
@@ -11,12 +13,19 @@ module Chip8
       @screen   = Screen.new(@memory)
       @sound    = SoundCard.new
       @disassambler = Disassambler.new
-    end
 
-    def run
       load_sprites_to_memory(SPRITES)
       rom = open_rom
       load_rom_to_memory(rom)
+    end
+
+    def run
+        opcode = @memory.opcode(@register.pc)
+        # p opcode.to_s(16)
+        # p @register.v
+        p opcode
+        p @register.pc
+        execute(opcode)
     end
 
     private
@@ -42,22 +51,24 @@ module Chip8
       id           = disassambled[:instruction][:id]
       args         = disassambled[:arguments]
 
+      p "id: #{id} args: #{args}"
+      p "--" * 20
       case id
       when 'CLS'
         @screen.reset_buffer
       when 'RET'
-        @register.stack_pointer = @register.pop_stack
+        @register.sp = @register.pop_stack
       when 'JP_ADDR'
-        @register.program_counter = args[0]
+        @register.pc = args[0]
       when 'CALL_ADDR'
-        @register.push_stack(@register.program_counter)
-        @register.program_counter = args[0]
+        @register.push_stack(@register.pc)
+        @register.pc = args[0]
       when 'SE_VX_KK'
-        @register.program_counter += 2 if @register.v[args[0]] == args[1]
+        @register.pc += 2 if @register.v[args[0]] == args[1]
       when 'SNE_VX_KK'
-        @register.program_counter += 2 if @register.v[args[0]] != args[1]
+        @register.pc += 2 if @register.v[args[0]] != args[1]
       when 'SE_VX_VY'
-        @register.program_counter += 2 if @register.v[args[0]] === @register.v[args[1]]
+        @register.pc += 2 if @register.v[args[0]] === @register.v[args[1]]
       when 'LD_VX_KK'
         @register.v[args[0]] = args[1]
       when 'ADD_VX_KK'
@@ -94,11 +105,11 @@ module Chip8
         @register.v[0x0f] = @register.v[args[0]] & 0x80 > 0 ? 1 : 0
         @register.v[args[0]] <<= 1
       when 'SNE_VX_VY'
-        @register.program_counter += 2 if @register.v[args[0]] != @register.v[args[1]]
+        @register.pc += 2 if @register.v[args[0]] != @register.v[args[1]]
       when 'LD_I_ADDR'
         @register.i = args[0]
       when 'JP_V0_ADDR'
-        @register.program_counter = @register.v[0] + args[0]
+        @register.pc = @register.v[0] + args[0]
       when 'RND_VX_KK'
         random = (rand * 0xff).floor
         @register.v[0] = random + args[1]
@@ -111,9 +122,9 @@ module Chip8
         )
         @register.v[0x0f] = collision
       when 'SKP_VX'
-        @register.program_counter += 2 if @keyboard.key_down?(@register.v[args[0]])
+        @register.pc += 2 if @keyboard.key_down?(@register.v[args[0]])
       when 'SKNP_VX'
-        @register.program_counter += 2 unless @keyboard.key_down?(@register.v[args[0]])
+        @register.pc += 2 unless @keyboard.key_down?(@register.v[args[0]])
       when 'LD_VX_DT'
         @register.v[args[0]] = @register.delay_timer
       when 'LD_VX_K'
@@ -152,6 +163,8 @@ module Chip8
           @register.v[n] = @memory[@register.i + n]
         end
       end
+
+      @register.pc += 2
     end
   end
 end
