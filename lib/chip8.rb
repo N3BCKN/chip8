@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './chip8/constants'
+require_relative './chip8/version'
+require_relative './chip8/helpers/constants'
 require_relative './chip8/helpers/exceptions'
+require_relative './chip8/helpers/debugger'
 require_relative './chip8/components/screen'
 require_relative './chip8/components/memory'
 require_relative './chip8/components/register'

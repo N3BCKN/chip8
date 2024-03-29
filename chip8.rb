@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require 'ruby2d'
+require 'optparse'
 
 require_relative './lib/chip8'
+require_relative './parser'
 
 set width:   Chip8::BASE_WIDTH  * Chip8::SCREEN_MULTIPLIER
 set height:  Chip8::BASE_HEIGHT * Chip8::SCREEN_MULTIPLIER
@@ -10,7 +12,8 @@ set color:   Chip8::BG_COLOR
 set title:   Chip8::TITLE
 set fps_cap: Chip8::FPS_NUMBER
 
-chip8 = Chip8::Emulator.new
+options = Parser.parse
+chip8 = Chip8::Emulator.new(options[:rom_address], options[:debug])
 
 on :key_down do |event|
   chip8.keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
@@ -19,11 +22,6 @@ end
 on :key_up do |event|
   chip8.keyboard.key_up(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key
 end
-
-# chip8.screen.draw_sprite(10, 1,  0, 5)
-# chip8.screen.draw_sprite(10, 6,  5, 5)
-# chip8.screen.draw_sprite(10, 11, 10, 5)
-# chip8.screen.draw_sprite(10, 16, 15, 5)
 
 update do
   clear
