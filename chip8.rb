@@ -11,7 +11,6 @@ set title:   Chip8::TITLE
 set fps_cap: Chip8::FPS_NUMBER
 
 chip8 = Chip8::Emulator.new
-chip8.run
 
 on :key_down do |event|
   chip8.keyboard.key_down(event.key.to_sym) if Chip8::ACCEPTED_KEYS.include? event.key

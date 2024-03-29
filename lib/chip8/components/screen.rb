@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
-
 module Chip8
   class Screen
     attr_reader :buffer
@@ -26,16 +24,16 @@ module Chip8
     def draw_sprite(h, w, sprite_address, num)
       pixel_collision = 0
 
-      for ly in 0...num do
-        line =  @memory[sprite_address + ly]
+      for lh in 0...num do
+        line =  @memory[sprite_address + lh]
 
-        for lx in 0...8 do
-          bit_to_check = 0b10000000 >> lx
+        for lw in 0...8 do
+          bit_to_check = 0b10000000 >> lw
           signal       = line & bit_to_check > 0 ? 1 : 0
-          ph           = (h + ly) % BASE_HEIGHT
-          pw           = (w + lx) % BASE_WIDTH
+          ph           = (h + lh) % BASE_HEIGHT
+          pw           = (w + lw) % BASE_WIDTH
 
-          pixel_collision = 1 if @buffer[ph][pw] != 0
+          pixel_collision = 1 if @buffer[ph][pw] == 1
 
           @buffer[ph][pw] = signal
         end

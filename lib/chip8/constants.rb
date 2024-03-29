@@ -102,7 +102,7 @@ module Chip8
     },
     {
       key: 7,
-      id: 'SNE_VX_NN',
+      id: 'SNE_VX_KK',
       name: 'SNE',
       mask: 0xf000,
       pattern: 0x4000,

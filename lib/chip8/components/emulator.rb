@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
-
 module Chip8
   class Emulator
     attr_accessor :keyboard, :screen, :register, :sound
@@ -20,18 +18,14 @@ module Chip8
     end
 
     def run
-        opcode = @memory.opcode(@register.pc)
-        # p opcode.to_s(16)
-        # p @register.v
-        p opcode
-        p @register.pc
-        execute(opcode)
+      opcode = @memory.opcode(@register.pc)
+      execute(opcode)
     end
 
     private
 
     def open_rom
-      path = ARGV[0] || './roms/test_opcode.ch8' #  TODO: custom error class here
+      path = ARGV[0] || './roms/br8kout.ch8' #  TODO: custom error class here
 
       (File.open(path, 'rb') { |f| f.read }).unpack('C*')
     end
@@ -47,17 +41,17 @@ module Chip8
     end
 
     def execute(opcode)
+      @register.pc += 2
+
       disassambled = @disassambler.disassamble(opcode)
       id           = disassambled[:instruction][:id]
       args         = disassambled[:arguments]
 
-      p "id: #{id} args: #{args}"
-      p "--" * 20
       case id
       when 'CLS'
         @screen.reset_buffer
       when 'RET'
-        @register.sp = @register.pop_stack
+        @register.pc = @register.pop_stack
       when 'JP_ADDR'
         @register.pc = args[0]
       when 'CALL_ADDR'
@@ -68,11 +62,12 @@ module Chip8
       when 'SNE_VX_KK'
         @register.pc += 2 if @register.v[args[0]] != args[1]
       when 'SE_VX_VY'
-        @register.pc += 2 if @register.v[args[0]] === @register.v[args[1]]
+        @register.pc += 2 if @register.v[args[0]] == @register.v[args[1]]
       when 'LD_VX_KK'
         @register.v[args[0]] = args[1]
       when 'ADD_VX_KK'
         @register.v[args[0]] += args[1]
+        @register.v[args[0]] &= 0xff
       when 'LD_VX_VY'
         @register.v[args[0]] = @register.v[args[1]]
       when 'OR_VX_VY'
@@ -112,14 +107,15 @@ module Chip8
         @register.pc = @register.v[0] + args[0]
       when 'RND_VX_KK'
         random = (rand * 0xff).floor
-        @register.v[0] = random + args[1]
+        @register.v[args[0]] = random & args[1]
       when 'DRW_VX_VY_N'
         collision = screen.draw_sprite(
-          @register.v[args[0]],
           @register.v[args[1]],
+          @register.v[args[0]],
           @register.i,
           args[2]
         )
+
         @register.v[0x0f] = collision
       when 'SKP_VX'
         @register.pc += 2 if @keyboard.key_down?(@register.v[args[0]])
@@ -163,8 +159,6 @@ module Chip8
           @register.v[n] = @memory[@register.i + n]
         end
       end
-
-      @register.pc += 2
     end
   end
 end

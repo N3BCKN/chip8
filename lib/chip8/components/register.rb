@@ -9,8 +9,8 @@ module Chip8
       @i = 0
       @delay_timer = 0
       @sound_timer = 0
-      @sp = -1 # sp
-      @pc = LOAD_PROGRAM_ADDRESS
+      @sp = -1 # stack_pointer
+      @pc = LOAD_PROGRAM_ADDRESS # program counter
       @stack = Array.new(STACK_DEPTH, 0)
     end
 
