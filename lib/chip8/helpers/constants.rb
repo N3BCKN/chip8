@@ -3,7 +3,7 @@
 module Chip8
   # main
   TITLE = 'chip8 emulator'
-  FPS_NUMBER = 30
+  FPS_NUMBER = 60
 
   # display
   BASE_WIDTH  = 64
