@@ -25,7 +25,7 @@ module Chip8
     private
 
     def open_rom
-      path = ARGV[0] || './roms/br8kout.ch8' #  TODO: custom error class here
+      path = ARGV[0] || './roms/test_opcode.ch8' #  TODO: custom error class here
 
       (File.open(path, 'rb') { |f| f.read }).unpack('C*')
     end
@@ -48,67 +48,67 @@ module Chip8
       args         = disassambled[:arguments]
 
       case id
-      when 'CLS'
+      when :cls
         @screen.reset_buffer
-      when 'RET'
+      when :ret
         @register.pc = @register.pop_stack
-      when 'JP_ADDR'
+      when :jp_addr
         @register.pc = args[0]
-      when 'CALL_ADDR'
+      when :call_addr
         @register.push_stack(@register.pc)
         @register.pc = args[0]
-      when 'SE_VX_KK'
+      when :se_vx_kk
         @register.pc += 2 if @register.v[args[0]] == args[1]
-      when 'SNE_VX_KK'
+      when :sne_vx_kk
         @register.pc += 2 if @register.v[args[0]] != args[1]
-      when 'SE_VX_VY'
+      when :se_vx_vy
         @register.pc += 2 if @register.v[args[0]] == @register.v[args[1]]
-      when 'LD_VX_KK'
+      when :ld_vx_kk
         @register.v[args[0]] = args[1]
-      when 'ADD_VX_KK'
+      when :add_vx_kk
         @register.v[args[0]] += args[1]
         @register.v[args[0]] &= 0xff
-      when 'LD_VX_VY'
+      when :ld_vx_vy
         @register.v[args[0]] = @register.v[args[1]]
-      when 'OR_VX_VY'
+      when :or_vx_vy
         @register.v[args[0]] |= @register.v[args[1]]
-      when 'AND_VX_VY'
+      when :and_vx_vy
         @register.v[args[0]] &= @register.v[args[1]]
-      when 'XOR_VX_VY'
+      when :xor_vx_vy
         @register.v[args[0]] ^= @register.v[args[1]]
-      when 'ADD_VX_VY'
+      when :add_vx_vy
         @register.v[0x0f] = if @register.v[args[0]] + @register.v[args[1]] > 0xff
                               1
                             else
                               0
                             end
         @register.v[args[0]] += @register.v[args[1]]
-      when 'SUB_VX_VY'
+      when :sub_vx_vy
         @register.v[0x0f] = if @register.v[args[0]] > @register.v[args[1]]
                               1
                             else
                               0
                             end
         @register.v[args[0]] -= @register.v[args[1]]
-      when 'SHR_VX_VY'
+      when :shr_vx_vy
         @register.v[0x0f] = @register.v[args[0]] & 0x01
         @register.v[args[0]] >>= 1
-      when 'SUBN_VX_VY'
+      when :subn_vx_vy
         @register.v[0x0f] = @register.v[args[1]] > @register.v[args[0]] ? 1 : 0
         @register.v[args[0]] = @register.v[args[1]] - @register.v[args[0]]
-      when 'SHL_VX_VY'
+      when :shl_vx_vy
         @register.v[0x0f] = @register.v[args[0]] & 0x80 > 0 ? 1 : 0
         @register.v[args[0]] <<= 1
-      when 'SNE_VX_VY'
+      when :sne_vx_vy
         @register.pc += 2 if @register.v[args[0]] != @register.v[args[1]]
-      when 'LD_I_ADDR'
+      when :ld_i_addr
         @register.i = args[0]
-      when 'JP_V0_ADDR'
+      when :jp_v0_addr
         @register.pc = @register.v[0] + args[0]
-      when 'RND_VX_KK'
+      when :rnd_vx_kk
         random = (rand * 0xff).floor
         @register.v[args[0]] = random & args[1]
-      when 'DRW_VX_VY_N'
+      when :drw_vx_vy_n
         collision = screen.draw_sprite(
           @register.v[args[1]],
           @register.v[args[0]],
@@ -117,13 +117,13 @@ module Chip8
         )
 
         @register.v[0x0f] = collision
-      when 'SKP_VX'
+      when :skp_vx
         @register.pc += 2 if @keyboard.key_down?(@register.v[args[0]])
-      when 'SKNP_VX'
+      when :sknp_vx
         @register.pc += 2 unless @keyboard.key_down?(@register.v[args[0]])
-      when 'LD_VX_DT'
+      when :ld_vx_dt
         @register.v[args[0]] = @register.delay_timer
-      when 'LD_VX_K'
+      when :ld_vx_k
         Thread.new do
           key_pressed = @keyboard.any_key_down?
           loop do
@@ -134,15 +134,15 @@ module Chip8
           end
           @register.v[args[0]] = key_pressed
         end
-      when 'LD_DT_VX'
+      when :ld_dt_vx
         @register.delay_timer = @register.v[args[0]]
-      when 'LD_ST_VX'
+      when :ld_st_vx
         @register.sound_timer = @register.v[args[0]]
-      when 'ADD_I_VX'
+      when :add_i_vx
         @register.i += @register.v[args[0]]
-      when 'LD_F_VX'
+      when :ld_f_vx
         @register.i = @register.v[args[0]] * SPRITE_HIGHT
-      when 'LD_B_VX'
+      when :ld_b_vx
         x        = register.v[args[0]]
         hundreds = (x / 100).floor
         tens     = ((x - hundreds * 100) / 10).floor
@@ -150,11 +150,11 @@ module Chip8
         @memory[@register.i]     = hundreds
         @memory[@register.i + 1] = tens
         @memory[@register.i + 2] = ones
-      when 'LD_I_VX'
+      when :ld_i_vx
         (0..args[0]).each do |n|
           @memory[@register.i + n] = @register.v[n]
         end
-      when 'LD_VX_I'
+      when :ld_vx_i
         (0..args[0]).each do |n|
           @register.v[n] = @memory[@register.i + n]
         end

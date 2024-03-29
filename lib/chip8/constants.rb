@@ -62,7 +62,7 @@ module Chip8
   INSTRUCTIONS = [
     {
       key: 2,
-      id: 'CLS',
+      id: :cls,
       name: 'CLS',
       mask: 0xffff,
       pattern: 0x00e0,
@@ -70,7 +70,7 @@ module Chip8
     },
     {
       key: 3,
-      id: 'RET',
+      id: :ret,
       name: 'RET',
       mask: 0xffff,
       pattern: 0x00ee,
@@ -78,7 +78,7 @@ module Chip8
     },
     {
       key: 4,
-      id: 'JP_ADDR',
+      id: :jp_addr,
       name: 'JP',
       mask: 0xf000,
       pattern: 0x1000,
@@ -86,7 +86,7 @@ module Chip8
     },
     {
       key: 5,
-      id: 'CALL_ADDR',
+      id: :call_addr,
       name: 'CALL',
       mask: 0xf000,
       pattern: 0x2000,
@@ -94,7 +94,7 @@ module Chip8
     },
     {
       key: 6,
-      id: 'SE_VX_KK',
+      id: :se_vx_kk,
       name: 'SE',
       mask: 0xf000,
       pattern: 0x3000,
@@ -102,7 +102,7 @@ module Chip8
     },
     {
       key: 7,
-      id: 'SNE_VX_KK',
+      id: :sne_vx_kk,
       name: 'SNE',
       mask: 0xf000,
       pattern: 0x4000,
@@ -110,7 +110,7 @@ module Chip8
     },
     {
       key: 8,
-      id: 'SE_VX_VY',
+      id: :se_vx_vy,
       name: 'SE',
       mask: 0xf00f,
       pattern: 0x5000,
@@ -118,7 +118,7 @@ module Chip8
     },
     {
       key: 9,
-      id: 'LD_VX_KK',
+      id: :ld_vx_kk,
       name: 'LD',
       mask: 0xf000,
       pattern: 0x6000,
@@ -126,7 +126,7 @@ module Chip8
     },
     {
       key: 10,
-      id: 'ADD_VX_KK',
+      id: :add_vx_kk,
       name: 'ADD',
       mask: 0xf000,
       pattern: 0x7000,
@@ -134,7 +134,7 @@ module Chip8
     },
     {
       key: 11,
-      id: 'LD_VX_VY',
+      id: :ld_vx_vy,
       name: 'LD',
       mask: 0xf00f,
       pattern: 0x8000,
@@ -142,7 +142,7 @@ module Chip8
     },
     {
       key: 12,
-      id: 'OR_VX_VY',
+      id: :or_vx_vy,
       name: 'OR',
       mask: 0xf00f,
       pattern: 0x8001,
@@ -150,7 +150,7 @@ module Chip8
     },
     {
       key: 13,
-      id: 'AND_VX_VY',
+      id: :and_vx_vy,
       name: 'AND',
       mask: 0xf00f,
       pattern: 0x8002,
@@ -158,7 +158,7 @@ module Chip8
     },
     {
       key: 14,
-      id: 'XOR_VX_VY',
+      id: :xor_vx_vy,
       name: 'XOR',
       mask: 0xf00f,
       pattern: 0x8003,
@@ -166,7 +166,7 @@ module Chip8
     },
     {
       key: 15,
-      id: 'ADD_VX_VY',
+      id: :add_vx_vy,
       name: 'ADD',
       mask: 0xf00f,
       pattern: 0x8004,
@@ -174,7 +174,7 @@ module Chip8
     },
     {
       key: 16,
-      id: 'SUB_VX_VY',
+      id: :sub_vx_vy,
       name: 'SUB',
       mask: 0xf00f,
       pattern: 0x8005,
@@ -182,7 +182,7 @@ module Chip8
     },
     {
       key: 17,
-      id: 'SHR_VX_VY',
+      id: :shr_vx_vy,
       name: 'SHR',
       mask: 0xf00f,
       pattern: 0x8006,
@@ -190,7 +190,7 @@ module Chip8
     },
     {
       key: 18,
-      id: 'SUBN_VX_VY',
+      id: :subn_vx_vy,
       name: 'SUBN',
       mask: 0xf00f,
       pattern: 0x8007,
@@ -198,7 +198,7 @@ module Chip8
     },
     {
       key: 19,
-      id: 'SHL_VX_VY',
+      id: :shl_vx_vy,
       name: 'SHL',
       mask: 0xf00f,
       pattern: 0x800E,
@@ -206,7 +206,7 @@ module Chip8
     },
     {
       key: 20,
-      id: 'SNE_VX_VY',
+      id: :sne_vx_vy,
       name: 'SNE',
       mask: 0xf00f,
       pattern: 0x9000,
@@ -214,7 +214,7 @@ module Chip8
     },
     {
       key: 21,
-      id: 'LD_I_ADDR',
+      id: :ld_i_addr,
       name: 'LD',
       mask: 0xf000,
       pattern: 0xa000,
@@ -222,7 +222,7 @@ module Chip8
     },
     {
       key: 22,
-      id: 'JP_V0_ADDR',
+      id: :jp_v0_addr,
       name: 'JP',
       mask: 0xf000,
       pattern: 0xb000,
@@ -230,7 +230,7 @@ module Chip8
     },
     {
       key: 23,
-      id: 'RND_VX_KK',
+      id: :rnd_vx_kk,
       name: 'RND',
       mask: 0xf000,
       pattern: 0xc000,
@@ -238,7 +238,7 @@ module Chip8
     },
     {
       key: 24,
-      id: 'DRW_VX_VY_N',
+      id: :drw_vx_vy_n,
       name: 'DRW',
       mask: 0xf000,
       pattern: 0xd000,
@@ -246,7 +246,7 @@ module Chip8
     },
     {
       key: 25,
-      id: 'SKP_VX',
+      id: :skp_vx,
       name: 'SKP',
       mask: 0xf0ff,
       pattern: 0xe09e,
@@ -254,7 +254,7 @@ module Chip8
     },
     {
       key: 26,
-      id: 'SKNP_VX',
+      id: :sknp_vx,
       name: 'SKNP',
       mask: 0xf0ff,
       pattern: 0xe0a1,
@@ -262,7 +262,7 @@ module Chip8
     },
     {
       key: 27,
-      id: 'LD_VX_DT',
+      id: :ld_vx_dt,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf007,
@@ -270,7 +270,7 @@ module Chip8
     },
     {
       key: 28,
-      id: 'LD_VX_K',
+      id: :ld_vx_k,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf00a,
@@ -278,7 +278,7 @@ module Chip8
     },
     {
       key: 29,
-      id: 'LD_DT_VX',
+      id: :ld_dt_vx,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf015,
@@ -286,7 +286,7 @@ module Chip8
     },
     {
       key: 30,
-      id: 'LD_ST_VX',
+      id: :ld_st_vx,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf018,
@@ -294,7 +294,7 @@ module Chip8
     },
     {
       key: 31,
-      id: 'ADD_I_VX',
+      id: :add_i_vx,
       name: 'ADD',
       mask: 0xf0ff,
       pattern: 0xf01e,
@@ -302,7 +302,7 @@ module Chip8
     },
     {
       key: 32,
-      id: 'LD_F_VX',
+      id: :ld_f_vx,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf029,
@@ -310,7 +310,7 @@ module Chip8
     },
     {
       key: 33,
-      id: 'LD_B_VX',
+      id: :ld_b_vx,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf033,
@@ -318,7 +318,7 @@ module Chip8
     },
     {
       key: 34,
-      id: 'LD_I_VX',
+      id: :ld_i_vx,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf055,
@@ -326,7 +326,7 @@ module Chip8
     },
     {
       key: 35,
-      id: 'LD_VX_I',
+      id: :ld_vx_i,
       name: 'LD',
       mask: 0xf0ff,
       pattern: 0xf065,
