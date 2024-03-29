@@ -26,7 +26,7 @@ module Chip8
 
     def push_stack(value)
       @sp += 1
-      raise StandardError if stack_overflow? # TODO: write custom error class to handle it
+      raise StackOverflowError if stack_overflow?
 
       @stack[@sp] = value
     end
@@ -34,7 +34,7 @@ module Chip8
     def pop_stack
       value = @stack[@sp]
       @sp -= 1
-      raise StandardError if stack_underflow? # TODO: write custom error class to handle it
+      raise StackUnderflowError if stack_underflow?
 
       value
     end

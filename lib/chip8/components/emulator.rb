@@ -25,7 +25,7 @@ module Chip8
     private
 
     def open_rom
-      path = ARGV[0] || './roms/test_opcode.ch8' #  TODO: custom error class here
+      path = ARGV[0] || './roms/test_opcode.ch8'
 
       (File.open(path, 'rb') { |f| f.read }).unpack('C*')
     end
@@ -35,7 +35,7 @@ module Chip8
     end
 
     def load_rom_to_memory(rom)
-      return unless rom.size + LOAD_PROGRAM_ADDRESS <= MEMORY_SIZE # TODO: custom error class here
+      raise ExceedingAllowableMemoryError if rom.size + LOAD_PROGRAM_ADDRESS <= MEMORY_SIZE
 
       rom.each_with_index { |v, i| @memory[LOAD_PROGRAM_ADDRESS + i] = v }
     end
@@ -158,6 +158,8 @@ module Chip8
         (0..args[0]).each do |n|
           @register.v[n] = @memory[@register.i + n]
         end
+      else
+        raise InstructionUnknownError, "instruction #{id} is unknown"
       end
     end
   end
